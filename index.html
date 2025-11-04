@@ -457,6 +457,32 @@
             color: #64748b;
         }
 
+        .technoda-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: block;
+        }
+
+        .technoda-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .technoda-link.hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 padding: 20px;
@@ -486,10 +512,19 @@
             .logo-box {
                 padding: 10px 20px;
             }
+
+            .technoda-link {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
+    <a href="https://technoda.org.il" target="_blank" class="technoda-link" id="technodaLink">חזרה לאתר הטכנודע</a>
+
     <div class="container">
         <div class="main-content">
             <!-- Section 1: Welcome -->
@@ -1021,6 +1056,7 @@
                 backButtons.forEach(btn => {
                     btn.style.display = navigationStack.length > 1 ? 'inline-block' : 'none';
                 });
+
             }
         }
 
