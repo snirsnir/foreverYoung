@@ -16,10 +16,59 @@
             font-family: 'Fredoka', sans-serif;
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f6f8ff 0%, #e9ecff 100%);
+            background:
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom,
+                    #ffffff 0%,
+                    #ffffff 45%,
+                    transparent 45%,
+                    transparent 45.5%),
+                radial-gradient(ellipse at 50% 50%, #8b1574 0%, #6b0f5a 50%, #4a0a3f 100%);
+            background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+            background-position: 0 0, 0 0, 0 0, 0 0;
             direction: rtl;
             padding: 20px;
             color: #2d3748;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 42%;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background:
+                radial-gradient(ellipse 100px 40px at 10% 50%, transparent 40%, transparent 41%, #f59e0b 41%, #f59e0b 42%, transparent 42%),
+                radial-gradient(ellipse 80px 35px at 25% 70%, transparent 40%, transparent 41%, #f59e0b 41%, #f59e0b 42%, transparent 42%),
+                radial-gradient(ellipse 60px 25px at 5% 30%, transparent 40%, transparent 41%, #f59e0b 41%, #f59e0b 42%, transparent 42%),
+                radial-gradient(ellipse 90px 38px at 95% 60%, transparent 40%, transparent 41%, #f59e0b 41%, #f59e0b 42%, transparent 42%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 43%;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M 0,60 Q 150,20 300,60 T 600,60 T 900,60 T 1200,60 T 1500,60 T 1800,60 T 2100,60 T 2400,60' stroke='%23f59e0b' stroke-width='2' fill='none' stroke-dasharray='8,6'/%3E%3Cpath d='M 0,80 Q 180,100 360,80 T 720,80 T 1080,80 T 1440,80 T 1800,80 T 2160,80 T 2520,80' stroke='%23f59e0b' stroke-width='2' fill='none' stroke-dasharray='8,6'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: 0 0;
+            pointer-events: none;
+            z-index: 1;
+            animation: wave 20s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position: 0 0; }
+            100% { background-position: 2400px 0; }
         }
 
         .container {
@@ -27,6 +76,73 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
+            z-index: 10;
+        }
+
+        /* אלמנטים דקורטיביים */
+        .deco-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .deco-star {
+            position: absolute;
+            color: #f59e0b;
+            font-size: 20px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .deco-star.small {
+            font-size: 14px;
+        }
+
+        .deco-star.white {
+            color: rgba(139, 92, 246, 0.3);
+        }
+
+        .deco-circle {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .deco-circle.cyan {
+            border-color: #06b6d4;
+            width: 15px;
+            height: 15px;
+        }
+
+        .deco-circle.yellow {
+            border-color: #fbbf24;
+            width: 12px;
+            height: 12px;
+        }
+
+        .deco-icon {
+            position: absolute;
+            font-size: 32px;
+            animation: bounce 5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(5deg); }
         }
 
         .back-button {
@@ -43,6 +159,8 @@
             margin: 10px;
             box-shadow: 0 4px 6px rgba(100, 116, 139, 0.2);
             display: none;
+            position: relative;
+            z-index: 100;
         }
 
         .back-button:hover {
@@ -62,10 +180,13 @@
             max-width: 900px;
             margin: 20px auto 0;
             text-align: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(139, 21, 116, 0.15);
+            position: relative;
+            z-index: 50;
+            backdrop-filter: blur(5px);
         }
 
         .section {
@@ -95,7 +216,7 @@
             background: #f8fafc;
             padding: 15px 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(139, 21, 116, 0.1);
             transition: transform 0.3s ease;
             display: flex;
             align-items: center;
@@ -121,22 +242,22 @@
         h1 {
             font-size: 2.8em;
             margin-bottom: 30px;
-            color: #1a365d;
+            color: #8b1574;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 2px 4px rgba(139, 21, 116, 0.2);
         }
 
         h2 {
             font-size: 2.2em;
             margin-bottom: 25px;
-            color: #1a365d;
+            color: #8b1574;
             font-weight: 600;
         }
 
         h3 {
             font-size: 1.8em;
             margin: 25px 0 20px;
-            color: #2563eb;
+            color: #f59e0b;
             font-weight: 600;
         }
 
@@ -153,7 +274,7 @@
         }
 
         .button {
-            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            background: linear-gradient(45deg, #8b1574, #6b0f5a);
             color: white;
             border: none;
             padding: 15px 35px;
@@ -164,12 +285,15 @@
             font-family: 'Fredoka', sans-serif;
             font-weight: 500;
             margin: 10px;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 6px rgba(139, 21, 116, 0.3);
+            position: relative;
+            z-index: 100;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 6px 8px rgba(139, 21, 116, 0.4);
+            background: linear-gradient(45deg, #a01887, #8b1574);
         }
 
         .button.secondary {
@@ -185,15 +309,15 @@
         }
 
         .grade-block {
-            background: #f8fafc;
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
             padding: 20px 30px;
             border-radius: 12px;
             min-width: 120px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(139, 21, 116, 0.15);
             transition: transform 0.3s ease;
             font-size: 1.3em;
             font-weight: 600;
-            color: #1a365d;
+            color: #8b1574;
         }
 
         .grade-block:hover {
@@ -211,14 +335,16 @@
             background: #f8fafc;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(139, 21, 116, 0.1);
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            z-index: 50;
         }
 
         .concept-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(139, 21, 116, 0.15);
         }
 
         .concept-icon {
@@ -228,7 +354,7 @@
 
         .concept-box h4 {
             font-size: 1.3em;
-            color: #1a365d;
+            color: #8b1574;
             margin-bottom: 10px;
         }
 
@@ -250,7 +376,7 @@
         }
 
         .timeline-date {
-            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            background: linear-gradient(45deg, #8b1574, #6b0f5a);
             color: white;
             padding: 12px 20px;
             border-radius: 50px;
@@ -258,7 +384,7 @@
             font-size: 1.1em;
             min-width: 140px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 6px rgba(139, 21, 116, 0.3);
         }
 
         .timeline-content {
@@ -271,7 +397,7 @@
         }
 
         .timeline-content h4 {
-            color: #1a365d;
+            color: #8b1574;
             font-size: 1.2em;
             margin-bottom: 8px;
         }
@@ -298,7 +424,7 @@
 
         .audience-card h4 {
             font-size: 1.5em;
-            color: #1a365d;
+            color: #8b1574;
             margin-bottom: 15px;
         }
 
@@ -318,7 +444,7 @@
             content: "✓";
             position: absolute;
             right: 0;
-            color: #2563eb;
+            color: #8b1574;
             font-weight: bold;
         }
 
@@ -371,12 +497,12 @@
         }
 
         .modal h2 {
-            color: #1a365d;
+            color: #8b1574;
             margin-bottom: 20px;
         }
 
         .modal h3 {
-            color: #2563eb;
+            color: #f59e0b;
             margin-top: 25px;
             margin-bottom: 15px;
         }
@@ -417,8 +543,8 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #8b1574;
+            box-shadow: 0 0 0 3px rgba(139, 21, 116, 0.1);
         }
 
         .student-group {
@@ -429,7 +555,7 @@
         }
 
         .student-group h4 {
-            color: #1a365d;
+            color: #8b1574;
             margin-bottom: 15px;
             font-size: 1.2em;
         }
@@ -461,14 +587,14 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            background: linear-gradient(45deg, #8b1574, #6b0f5a);
             color: white;
             padding: 12px 25px;
             border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1em;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 10px rgba(139, 21, 116, 0.3);
             transition: all 0.3s ease;
             z-index: 1000;
             display: block;
@@ -476,7 +602,8 @@
 
         .technoda-link:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 6px 15px rgba(139, 21, 116, 0.4);
+            background: linear-gradient(45deg, #a01887, #8b1574);
         }
 
         .technoda-link.hidden {
@@ -525,6 +652,28 @@
 <body>
     <a href="https://technoda.org.il" target="_blank" class="technoda-link" id="technodaLink">חזרה לאתר הטכנודע</a>
 
+    <!-- אלמנטים דקורטיביים -->
+    <div class="deco-elements">
+        <!-- כוכבים -->
+        <div class="deco-star" style="top: 15%; left: 12%;">✦</div>
+        <div class="deco-star small white" style="top: 8%; left: 45%;">✦</div>
+        <div class="deco-star" style="top: 55%; left: 88%; color: #fbbf24;">★</div>
+        <div class="deco-star small" style="top: 65%; left: 30%; color: #fbbf24;">✦</div>
+        <div class="deco-star" style="top: 52%; left: 18%; color: #c026d3;">✦</div>
+        <div class="deco-star small" style="top: 72%; right: 15%; color: #fbbf24;">✦</div>
+        <div class="deco-star" style="top: 25%; right: 8%; color: rgba(139, 92, 246, 0.4);">✦</div>
+
+        <!-- עיגולים -->
+        <div class="deco-circle cyan" style="top: 20%; left: 35%;"></div>
+        <div class="deco-circle yellow" style="top: 60%; left: 75%;"></div>
+        <div class="deco-circle cyan" style="top: 12%; left: 78%;"></div>
+        <div class="deco-circle yellow" style="top: 68%; right: 20%;"></div>
+
+        <!-- אייקונים -->
+        <div class="deco-icon" style="top: 8%; right: 10%;">🧬</div>
+        <div class="deco-icon" style="top: 18%; left: 25%;">💊</div>
+    </div>
+
     <div class="container">
         <div class="main-content">
             <!-- Section 1: Welcome -->
@@ -542,11 +691,11 @@
                 </div>
 
                 <h1>נשים מובילות מדע</h1>
-                <p style="font-size: 1.6em; color: #2563eb; margin-bottom: 20px; font-weight: 600;">פרויקט Forever Young</p>
-                <p style="font-size: 1.3em; color: #1a365d; margin-bottom: 30px; font-weight: 500;">מחפשות את הכוכבות הבאות של עולם המדע!</p>
+                <p style="font-size: 1.6em; color: #8b1574; margin-bottom: 20px; font-weight: 600;">פרויקט Forever Young</p>
+                <p style="font-size: 1.3em; color: #6b0f5a; margin-bottom: 30px; font-weight: 500;">מחפשות את הכוכבות הבאות של עולם המדע!</p>
 
-                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px; border-right: 5px solid #2563eb;">
-                    <p style="font-size: 1.2em; font-style: italic; color: #1e40af; margin-bottom: 10px;">
+                <div style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px; border-right: 5px solid #8b1574;">
+                    <p style="font-size: 1.2em; font-style: italic; color: #701a75; margin-bottom: 10px;">
                         "שינוי לא יגיע אם נחכה לאדם אחר או לזמן אחר.<br>אנחנו אלה שחיכינו להם. אנחנו השינוי שאנחנו מחפשים."
                     </p>
                     <p style="font-size: 1em; color: #64748b; text-align: left;">- ברק אובמה</p>
@@ -572,17 +721,17 @@
                     לפני שאנחנו מתחילים להסביר, חשוב שתכירו אותנו
                 </p>
 
-                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 30px; border-radius: 15px; margin-top: 40px;">
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin-top: 40px;">
                     <div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 25px;">
-                        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                            <h3 style="color: #2563eb; margin-bottom: 15px; font-size: 1.3em;">🏛️ הטכנודע</h3>
+                        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 4px rgba(139, 21, 116, 0.1);">
+                            <h3 style="color: #f59e0b; margin-bottom: 15px; font-size: 1.3em;">🏛️ הטכנודע</h3>
                             <p style="line-height: 1.8; color: #475569;">
                                 המוזיאון הישראלי לרפואה ומדע, מרכז חווייתי וחדשני המוביל בחינוך לרפואה, מדע וטכנולוגיה. כאן נקיים את המפגשים הפרונטליים ואת האקתון המסכם.
                             </p>
                         </div>
 
-                        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                            <h3 style="color: #2563eb; margin-bottom: 15px; font-size: 1.3em;">💊 אסטרהזניקה</h3>
+                        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 4px rgba(139, 21, 116, 0.1);">
+                            <h3 style="color: #f59e0b; margin-bottom: 15px; font-size: 1.3em;">💊 אסטרהזניקה</h3>
                             <p style="line-height: 1.8; color: #475569;">
                                 חברת תרופות בינלאומית מובילה המשקיעה רבות במחקר ופיתוח למציאת פתרונות מיטביים לשינוי מציאות המטופלים בעולם. החברה פועלת רבות לקידום נערות בתחומי המדע והרפואה, ומנטוריות מומחיות מהחברה ילוו אתכן לאורך התכנית.
                             </p>
@@ -607,12 +756,12 @@
                     <p style="font-size: 1.15em; margin-bottom: 20px;">
                         יחד עם <strong>מנטוריות מומחיות ומובילות</strong>, נחשוב על דרכים יצירתיות להתמודד עם אתגרי רפואה מהעולם האמיתי.
                     </p>
-                    <p style="font-size: 1.1em; color: #2563eb;">
+                    <p style="font-size: 1.1em; color: #8b1574;">
                         התהליך המיוחד שנעבור נקרא <strong>Design Thinking</strong> - הדרך שבה מדענים, יזמים ואנשי טכנולוגיה עובדים בעולם האמיתי.
                     </p>
                 </div>
 
-                <h3 style="color: #1a365d; margin-bottom: 20px; text-align: center; font-size: 1.5em;">במה נתמקד?</h3>
+                <h3 style="color: #8b1574; margin-bottom: 20px; text-align: center; font-size: 1.5em;">במה נתמקד?</h3>
 
                 <div class="concept-boxes">
                     <div class="concept-box" onclick="openModal('heartModal')">
@@ -644,16 +793,16 @@
             <div id="section2c" class="section">
                 <h2>התהליך שלנו</h2>
 
-                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%); padding: 30px; border-radius: 15px; margin-bottom: 20px;">
-                    <h4 style="color: #0c4a6e; margin-bottom: 15px; font-size: 1.3em;">🎯 שלב 1: מפגש פתיחה</h4>
-                    <p style="line-height: 1.8; color: #075985;">
+                <div style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); padding: 30px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: #6b0f5a; margin-bottom: 15px; font-size: 1.3em;">🎯 שלב 1: מפגש פתיחה</h4>
+                    <p style="line-height: 1.8; color: #701a75;">
                         נפגש למפגש מקדים במוזיאון הטכנודע, נסביר על הפרויקט לעומק, נכיר את המנטוריות ונתחיל לגבש רעיונות ראשוניים.
                     </p>
                 </div>
 
-                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 30px; border-radius: 15px; margin-bottom: 20px;">
-                    <h4 style="color: #0c4a6e; margin-bottom: 15px; font-size: 1.3em;">💻 שלב 2: מפגשי זום</h4>
-                    <p style="line-height: 1.8; color: #075985;">
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: #92400e; margin-bottom: 15px; font-size: 1.3em;">💻 שלב 2: מפגשי זום</h4>
+                    <p style="line-height: 1.8; color: #78350f;">
                         נבצע 2 מפגשי זום בהם נלמד על כלים מעשיים, נקבל הכוונה מקצועית מהמנטוריות ונתכונן ליום השיא.
                     </p>
                 </div>
@@ -681,7 +830,7 @@
                 <div style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px;">
                     <h3 style="color: #831843; margin-bottom: 20px; font-size: 1.4em;">קריטריונים להצטרפות:</h3>
                     <ul style="text-align: right; list-style: none; padding: 0;">
-                        <li style="margin-bottom: 15px; font-size: 1.15em; color: #831843;">✓ <strong>תלמידות כיתה ח'-ט'</strong></li>
+                        <li style="margin-bottom: 15px; font-size: 1.15em; color: #831843;">✓ <strong>תלמידות כיתה ז'-ט'</strong></li>
                         <li style="margin-bottom: 15px; font-size: 1.15em; color: #831843;">✓ <strong>שלא משתתפות</strong> בכיתות ובתכניות מצוינות או מחוננים</li>
                         <li style="margin-bottom: 15px; font-size: 1.15em; color: #831843;">✓ בעלות <strong>תשוקה לשינוי</strong> ורצון להשקיע</li>
                     </ul>
@@ -697,6 +846,7 @@
                 </div>
 
                 <div class="grade-blocks">
+                    <div class="grade-block">כיתה ז'</div>
                     <div class="grade-block">כיתה ח'</div>
                     <div class="grade-block">כיתה ט'</div>
                 </div>
@@ -748,9 +898,9 @@
                     כך יראה המסע שלך ב-Forever Young
                 </p>
 
-                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
-                    <h3 style="color: #0c4a6e; font-size: 1.3em; margin-bottom: 10px;">📅 תקופת הרשמה</h3>
-                    <p style="font-size: 1.2em; color: #075985; font-weight: 600;">נובמבר - דצמבר 2025</p>
+                <div style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
+                    <h3 style="color: #6b0f5a; font-size: 1.3em; margin-bottom: 10px;">📅 תקופת הרשמה</h3>
+                    <p style="font-size: 1.2em; color: #701a75; font-weight: 600;">נובמבר - דצמבר 2025</p>
                 </div>
 
                 <div class="timeline">
@@ -786,7 +936,7 @@
                         <div class="timeline-content">
                             <h4>🏆 האקתון המסכם - יום השיא!</h4>
                             <p><strong>09:30-19:30 במוזיאון הטכנודע</strong></p>
-                            <p style="color: #dc2626; font-weight: 600; margin-top: 10px;">ביום זה תתקיים תחרות בין הקבוצות!</p>
+                            <p style="color: #8b1574; font-weight: 600; margin-top: 10px;">ביום זה תתקיים תחרות בין הקבוצות!</p>
                             <p>יום שלם מרגש בו תציגי את הפרויקט שלך בפני חבר שופטים מקצועי ותחווי חגיגת חדשנות!</p>
                         </div>
                     </div>
@@ -804,8 +954,8 @@
                 <p style="font-size: 1.1em; color: #64748b; margin-bottom: 30px;">
                     מלאי את הפרטים להרשמה לתכנית (קבוצה של 4 נערות)
                 </p>
-                <p style="font-size: 1em; color: #2563eb; margin-bottom: 30px;">
-                    לשאלות: <a href="mailto:snir@technoda.org.il" style="color: #2563eb;">snir@technoda.org.il</a>
+                <p style="font-size: 1em; color: #8b1574; margin-bottom: 30px;">
+                    לשאלות: <a href="mailto:snir@technoda.org.il" style="color: #8b1574;">snir@technoda.org.il</a>
                 </p>
 
                 <form id="registrationForm" onsubmit="handleSubmit(event)" style="text-align: right;">
@@ -825,6 +975,7 @@
                                 <label for="student1Grade">שכבת גיל *</label>
                                 <select id="student1Grade" name="entry.1404553888" required>
                                     <option value="">בחר/י...</option>
+                                    <option value="ז'">ז'</option>
                                     <option value="ח'">ח'</option>
                                     <option value="ט'">ט'</option>
                                 </select>
@@ -843,6 +994,7 @@
                                 <label for="student2Grade">שכבת גיל *</label>
                                 <select id="student2Grade" name="entry.1532749129" required>
                                     <option value="">בחר/י...</option>
+                                    <option value="ז'">ז'</option>
                                     <option value="ח'">ח'</option>
                                     <option value="ט'">ט'</option>
                                 </select>
@@ -861,6 +1013,7 @@
                                 <label for="student3Grade">שכבת גיל *</label>
                                 <select id="student3Grade" name="entry.1140093678" required>
                                     <option value="">בחר/י...</option>
+                                    <option value="ז'">ז'</option>
                                     <option value="ח'">ח'</option>
                                     <option value="ט'">ט'</option>
                                 </select>
@@ -879,6 +1032,7 @@
                                 <label for="student4Grade">שכבת גיל *</label>
                                 <select id="student4Grade" name="entry.1031496502" required>
                                     <option value="">בחר/י...</option>
+                                    <option value="ז'">ז'</option>
                                     <option value="ח'">ח'</option>
                                     <option value="ט'">ט'</option>
                                 </select>
@@ -952,13 +1106,13 @@
             <div id="negative" class="section">
                 <h2>תודה על ההתעניינות</h2>
                 <p style="font-size: 1.3em; margin: 30px 0;">
-                    התכנית מיועדת לנערות כיתות ח'-ט' שלא משתתפות בכיתות ובתכניות מצוינות או מחוננים.
+                    התכנית מיועדת לנערות כיתות ז'-ט' שלא משתתפות בכיתות ובתכניות מצוינות או מחוננים.
                 </p>
                 <p style="font-size: 1.2em; color: #64748b;">
                     נשמח לראותך בתכניות עתידיות!
                 </p>
-                <p style="font-size: 1em; color: #2563eb; margin-top: 20px;">
-                    לשאלות: <a href="mailto:snir@technoda.org.il" style="color: #2563eb;">snir@technoda.org.il</a>
+                <p style="font-size: 1em; color: #8b1574; margin-top: 20px;">
+                    לשאלות: <a href="mailto:snir@technoda.org.il" style="color: #8b1574;">snir@technoda.org.il</a>
                 </p>
             </div>
         </div>
