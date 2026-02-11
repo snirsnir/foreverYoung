@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מפגש זום ראשון - נשים מובילות מדע</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            direction: rtl;
+            overflow: hidden;
+            color: #2d3748;
+        }
+
+        /* Slide Container */
+        .slideshow {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 80px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            background: url('nashimBG.png') center 30%/cover no-repeat;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .slide-box {
+            background: rgba(30, 10, 40, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 25px;
+            padding: 45px 55px;
+            max-width: 950px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 3em;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #fbbf24;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .slide h3 {
+            font-size: 1.6em;
+            color: #fde68a;
+            margin-bottom: 15px;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.3em;
+            color: #f3e8ff;
+            line-height: 1.8;
+        }
+
+        .slide ul {
+            list-style: none;
+            text-align: right;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .slide ul li {
+            padding: 8px 0;
+            position: relative;
+            padding-right: 30px;
+        }
+
+        .slide ul li::before {
+            content: '✦';
+            position: absolute;
+            right: 0;
+            color: #fbbf24;
+            font-size: 1em;
+        }
+
+        /* Highlight text */
+        .highlight {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: rgba(251, 191, 36, 0.15);
+            border: 2px solid #fbbf24;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin: 15px 0;
+            display: inline-block;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.5em;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .nav-btn.nav-next {
+            background: rgba(0, 100, 0, 0.6);
+            border: 2px solid #22c55e;
+        }
+
+        .nav-btn.nav-next:hover {
+            background: rgba(0, 140, 0, 0.8);
+            border-color: #4ade80;
+            transform: scale(1.1);
+        }
+
+        .nav-btn.nav-prev {
+            background: rgba(150, 0, 0, 0.6);
+            border: 2px solid #ef4444;
+        }
+
+        .nav-btn.nav-prev:hover {
+            background: rgba(200, 0, 0, 0.8);
+            border-color: #f87171;
+            transform: scale(1.1);
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 18px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #d97706);
+            transition: width 0.4s ease;
+            z-index: 100;
+            border-radius: 0 0 0 3px;
+        }
+
+        /* Slide specific styles */
+        .welcome-emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide.active .animate-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide.active .animate-item:nth-child(1) { animation-delay: 0.1s; }
+        .slide.active .animate-item:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active .animate-item:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active .animate-item:nth-child(4) { animation-delay: 0.4s; }
+        .slide.active .animate-item:nth-child(5) { animation-delay: 0.5s; }
+        .slide.active .animate-item:nth-child(6) { animation-delay: 0.6s; }
+        .slide.active .animate-item:nth-child(7) { animation-delay: 0.7s; }
+        .slide.active .animate-item:nth-child(8) { animation-delay: 0.8s; }
+
+        .animate-item {
+            opacity: 0;
+        }
+
+        /* Square boxes for slide 6 */
+        .squares-container {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .square-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            width: 260px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .square-box:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.15);
+        }
+
+        .square-box .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .square-box h4 {
+            color: #fbbf24;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .square-box p {
+            font-size: 1em !important;
+            color: #e9d5ff;
+        }
+
+        /* Design Thinking image */
+        .dt-image-container {
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dt-image-container img {
+            max-width: 350px;
+            border-radius: 15px;
+            border: 3px solid rgba(251, 191, 36, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .dt-image-container img:hover {
+            transform: scale(1.05);
+            border-color: #fbbf24;
+        }
+
+        /* Image overlay modal */
+        .image-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .image-overlay.active {
+            display: flex;
+        }
+
+        .image-overlay img {
+            max-width: 80vw;
+            max-height: 80vh;
+            border-radius: 15px;
+            border: 3px solid #fbbf24;
+            box-shadow: 0 0 60px rgba(0,0,0,0.7);
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .image-overlay img.zoomed {
+            cursor: grab;
+            transition: none;
+        }
+
+        .image-overlay img.zoomed.dragging {
+            cursor: grabbing;
+        }
+
+        .hover-hint {
+            font-size: 0.9em !important;
+            color: #d4a5ff !important;
+            margin-top: 8px;
+        }
+
+        /* Tool cards for slide 9 */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.15);
+        }
+
+        .tool-card h4 {
+            color: #fbbf24;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            font-size: 1em !important;
+            color: #e9d5ff;
+        }
+
+        .tool-card .tool-link {
+            display: inline-block;
+            margin-top: 10px;
+            background: rgba(251, 191, 36, 0.3);
+            color: #fde68a;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .tool-card:hover .tool-link {
+            background: rgba(251, 191, 36, 0.5);
+        }
+
+        /* Homework image */
+        .homework-image {
+            max-width: 300px;
+            border-radius: 15px;
+            border: 3px solid rgba(251, 191, 36, 0.5);
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Steps for slide 11 */
+        .steps-container {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .step-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 20px;
+            padding: 25px;
+            width: 220px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .step-box:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #4a0a3f;
+        }
+
+        .step-box h4 {
+            color: #fbbf24;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .step-box p {
+            font-size: 0.95em !important;
+            color: #e9d5ff;
+        }
+
+        .bank-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #4a0a3f;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        .bank-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(251, 191, 36, 0.6);
+        }
+
+        /* Final slide */
+        .final-emoji {
+            font-size: 5em;
+            margin-bottom: 15px;
+        }
+
+        /* Result items for slide 6 */
+        .results-list {
+            text-align: right;
+            max-width: 800px;
+        }
+
+        .results-list li {
+            padding: 6px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 25px;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .slide p, .slide li {
+                font-size: 1.05em;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .squares-container, .steps-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .square-box, .step-box {
+                width: 90%;
+            }
+
+            .dt-image-container img {
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="slideshow">
+
+        <!-- שקף 1: ברוכות הבאות -->
+        <div class="slide active" id="slide1">
+            <div class="slide-box">
+                <div class="welcome-emoji">🌟</div>
+                <h1 class="animate-item">ברוכות הבאות למפגש זום ראשון</h1>
+                <h2 class="animate-item">נשים מובילות מדע!</h2>
+            </div>
+        </div>
+
+        <!-- שקף 2: על מה נדבר היום -->
+        <div class="slide" id="slide2">
+            <div class="slide-box">
+                <h2 class="animate-item">📋 על מה נדבר היום?</h2>
+                <ul>
+                    <li class="animate-item">על היום הראשון</li>
+                    <li class="animate-item">עמוד הבית של נשים מובילות מדע</li>
+                    <li class="animate-item">קצת על יום השיא שקורה עוד שבועיים</li>
+                    <li class="animate-item">
+                        <div class="highlight-box">
+                            ⭐ הרצאה מרתקת של <span class="highlight">איתן ושדי-לוי</span> מ-BLUEDOT על <span class="highlight">בינה מלאכותית</span>
+                        </div>
+                    </li>
+                    <li class="animate-item">הכירות עם כלי AI שיעזרו לכן לשווק את המוצר שלכן</li>
+                    <li class="animate-item">שיעורי בית לקראת מפגש הזום הבא - <span class="highlight">בנק הפרסומות</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- שקף 3: מה עשינו ביום הראשון -->
+        <div class="slide" id="slide3">
+            <div class="slide-box">
+                <h2 class="animate-item">🔬 אז נפגשנו בשבוע שעבר.. ומה עשינו?</h2>
+                <ul>
+                    <li class="animate-item">למדנו לעומק את <span class="highlight">הלב, מוח וריאות</span> וסיירנו במוזיאון הרפואה</li>
+                    <li class="animate-item">נחשפנו ל<span class="highlight">אתגרים אמיתיים</span> בכל אחד מהתחומים הללו</li>
+                    <li class="animate-item">יישמנו תהליך <span class="highlight">DESIGN THINKING</span> - שיטה המעודדת חדשנות ופתרון בעיות מורכבות</li>
+                </ul>
+                <div class="dt-image-container animate-item">
+                    <img src="design.png" alt="Design Thinking" id="dtImage" onclick="openImageOverlay(this.src)">
+                    <p class="hover-hint">🔍 לחצו על התמונה להגדלה</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 4: עמוד הבית -->
+        <div class="slide" id="slide4">
+            <div class="slide-box">
+                <h2 class="animate-item">🏠 עמוד הבית של נשים מובילות מדע</h2>
+                <p class="animate-item" style="max-width: 800px;">
+                    בעמוד הזה תוכלו לקבל את <span class="highlight">כל המידע הנחוץ</span> עבור הפרויקט
+                </p>
+                <p class="animate-item" style="max-width: 800px; margin-top: 10px;">
+                    קישורים לזומים, לוחות זמנים, עדכונים, רשימת הקבוצות ועוד
+                </p>
+                <div class="animate-item" style="margin-top: 30px;">
+                    <h3>איך מגיעים אליו?</h3>
+                    <div class="highlight-box" style="margin-top: 15px;">
+                        <p style="font-size: 1.4em !important;">
+                            🔎 כותבים בגוגל: <span class="highlight">נשים מובילות מדע בטכנודע</span>
+                        </p>
+                    </div>
+                    <p class="animate-item" style="margin-top: 15px; font-size: 1.2em !important;">או נכנסים לכתובת:</p>
+                    <a href="https://foreveryoung.technoda.org.il/" target="_blank" class="bank-btn animate-item" style="margin-top: 10px;">
+                        🌐 foreveryoung.technoda.org.il
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 5: על הזומים -->
+        <div class="slide" id="slide5">
+            <div class="slide-box">
+                <h2 class="animate-item">💻 מה הולך להיות בזומים?</h2>
+
+                <div style="display: flex; gap: 25px; width: 100%; max-width: 900px; margin-top: 15px; flex-wrap: wrap; justify-content: center;">
+
+                    <!-- זום היום -->
+                    <div class="animate-item" style="flex: 1; min-width: 280px; background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 18px; padding: 25px; text-align: right;">
+                        <h3 style="color: #fbbf24; margin-bottom: 15px; text-align: center; font-size: 1.3em;">📅 בזום היום</h3>
+                        <p style="color: #fde68a; font-weight: 600; margin-bottom: 12px; font-size: 1.05em;">⭐ נתמקד בחלק השיווקי של המוצר</p>
+                        <ul style="margin-top: 5px;">
+                            <li>חזרה על מה שעשינו במפגש בטכנודע</li>
+                            <li>הסבר ראשוני על הפורמט והמבנה</li>
+                            <li>מיני הרצאה מאת איתן ושדי-לוי מחברת BLUEDOT על בינה מלאכותית</li>
+                            <li>הכרת כלים דיגיטליים לשיווק דיגיטלי</li>
+                            <li>שיעורי בית</li>
+                        </ul>
+                    </div>
+
+                    <!-- זום בשבוע הבא -->
+                    <div class="animate-item" style="flex: 1; min-width: 280px; background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 18px; padding: 25px; text-align: right;">
+                        <h3 style="color: #fbbf24; margin-bottom: 15px; text-align: center; font-size: 1.3em;">📅 בזום בשבוע הבא</h3>
+                        <p style="color: #fde68a; font-weight: 600; margin-bottom: 12px; font-size: 1.05em;">⭐ נתמקד בחלק התיעודי של המוצר</p>
+                        <ul style="margin-top: 5px;">
+                            <li>הכרות עם ספר פרויקט</li>
+                            <li>אסטרטגיות הצגה אפקטיביות</li>
+                            <li>הכנה לפאנל השופטים</li>
+                            <li>דגשים וטיפים לקראת יום השיא</li>
+                            <li>מענה על שאלות</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 6: יום השיא -->
+        <div class="slide" id="slide6">
+            <div class="slide-box">
+                <h2 class="animate-item">🎯 מה הולך להיות ביום השיא?</h2>
+                <p class="animate-item" style="margin-bottom: 5px;">בחלק העיקרי של יום השיא - כל קבוצה תבקר ב-3 מתחמים</p>
+
+                <div class="squares-container animate-item">
+                    <div class="square-box">
+                        <div class="icon">📢</div>
+                        <h4>מתחם שיווק</h4>
+                        <p>יצירת תוכן שיווקי למוצר שלכן</p>
+                    </div>
+                    <div class="square-box">
+                        <div class="icon">📖</div>
+                        <h4>מתחם ספר פרויקט</h4>
+                        <p>תיעוד ובניית ספר פרויקט מקצועי</p>
+                    </div>
+                    <div class="square-box">
+                        <div class="icon">🔧</div>
+                        <h4>מתחם המייקרס</h4>
+                        <p>יצירת אב-טיפוס למוצר</p>
+                    </div>
+                </div>
+
+                <p class="animate-item">לכל חלק תקבלו כ<span class="highlight">שעה וחצי</span>, ובסוף התהליך תצאו עם:</p>
+
+                <ul class="results-list animate-item" style="margin-top: 10px;">
+                    <li>📖 <span class="highlight">ספר פרויקט</span> איכותי המסביר על הפיתוח שלכן</li>
+                    <li>📢 <span class="highlight">תוכן שיווקי</span> שיצרתן לפי בחירתכן - שיר, כרזה, לוגו ועוד</li>
+                    <li>🔧 <span class="highlight">אב-טיפוס</span> מסדנת המייקרס שימחיש את המוצר שלכן (הוא לא חייב לפעול כמובן...)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- שקף 7: הכנה לקראת יום השיא -->
+        <div class="slide" id="slide7">
+            <div class="slide-box">
+                <h2 class="animate-item">📝 הכנה לקראת יום השיא</h2>
+                <div class="animate-item" style="max-width: 850px; text-align: right;">
+                    <p style="margin-bottom: 20px;">
+                        בהמשך לתהליך שכבר עשיתן ביום הראשון בחלק של <span class="highlight">DESIGN THINKING</span>,
+                        אנו ממליצים בחום שתגיעו ליום השיא כבר <span class="highlight">"מבושלות על רעיון"</span>.
+                    </p>
+                    <p style="margin-bottom: 15px;">
+                        תחשבו מראש על:
+                    </p>
+                </div>
+                <ul class="animate-item">
+                    <li>🎯 מהי <span class="highlight">הבעיה</span> שאתן רוצות לפתור?</li>
+                    <li>👥 מיהו <span class="highlight">קהל היעד</span> שלכן?</li>
+                    <li>🔍 מה עולה מה<span class="highlight">מחקר</span> שביצעתן?</li>
+                    <li>💡 מהו ה<span class="highlight">פתרון</span> שאתן מציעות?</li>
+                </ul>
+                <p class="animate-item" style="margin-top: 15px;">
+                    ממש בהלימה למה שעשיתן ביום הראשון ב-Design Thinking 🚀
+                </p>
+            </div>
+        </div>
+
+        <!-- שקף 8: הרצאה -->
+        <div class="slide" id="slide8">
+            <div class="slide-box">
+                <div class="welcome-emoji">🎤</div>
+                <h2 class="animate-item" style="font-size: 2.5em;">ועכשיו...</h2>
+                <h1 class="animate-item" style="font-size: 2.4em;">זה הזמן להקשיב להרצאה של</h1>
+                <div class="highlight-box animate-item" style="margin-top: 10px;">
+                    <h2 style="font-size: 2em; margin-bottom: 5px;">איתן ושדי-לוי</h2>
+                    <p style="font-size: 1.3em !important;">על <span class="highlight" style="font-size: 1.2em;">בינה מלאכותית</span></p>
+                </div>
+                <p class="animate-item" style="margin-top: 15px; font-size: 1.1em !important; color: #d4a5ff;">מחברת BLUEDOT</p>
+            </div>
+        </div>
+
+        <!-- שקף 9: כלי AI -->
+        <div class="slide" id="slide9">
+            <div class="slide-box">
+                <h2 class="animate-item">🎨 כלים ליצירת תכנים גרפיים עבור יום השיא</h2>
+
+                <div class="tools-grid animate-item">
+                    <a href="https://suno.com/" target="_blank" class="tool-card">
+                        <h4>🎵 SUNO</h4>
+                        <p>פלטפורמה ליצירת שירים באמצעות בינה מלאכותית</p>
+                        <span class="tool-link">היכנסו לאתר ←</span>
+                    </a>
+                    <a href="https://gemini.google.com/" target="_blank" class="tool-card">
+                        <h4>🖼️ GEMINI</h4>
+                        <p>כלי של Google ליצירת תמונות וסרטונים חכמים</p>
+                        <span class="tool-link">היכנסו לאתר ←</span>
+                    </a>
+                    <a href="https://www.napkin.ai/" target="_blank" class="tool-card">
+                        <h4>📊 NAPKIN</h4>
+                        <p>יצירת תרשימים ואינפוגרפיקות באיכות גבוהה</p>
+                        <span class="tool-link">היכנסו לאתר ←</span>
+                    </a>
+                    <a href="https://www.design.com/s/logo-maker?code=25OFFSEM&utm_medium=cpc&utm_source=google&utm_campaign=middleeast_generic_logo&utm_adgroup=logos&utm_content=733558411880&utm_keyword=build+my+own+logo&utm_network=g&gad_source=1&gbraid=0AAAAADwF9LAEYg6H-N48um4O2_yYrBcyU&gclid=CjwKCAjwn6LABhBSEiwAsNJrjm96cbZFzbzko-9D7DHU0F424ed8LfCmTHHQ2ZMhHym11X0ZCGt48hoCuRkQAvD_BwE" target="_blank" class="tool-card">
+                        <h4>✏️ LOGO CREATOR</h4>
+                        <p>עיצוב לוגו מקצועי ומותאם אישית בקלות</p>
+                        <span class="tool-link">היכנסו לאתר ←</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 10: שיעורי בית -->
+        <div class="slide" id="slide10">
+            <div class="slide-box">
+                <h2 class="animate-item">📝 שיעורי בית</h2>
+                <div class="highlight-box animate-item">
+                    <h3>משימת הבית - פרסום ל<span class="highlight">בוחש סירים אוטומטי</span></h3>
+                </div>
+                <div class="animate-item" style="max-width: 800px; text-align: right; margin-top: 15px;">
+                    <p>המוצר שעלינו לפרסם הוא <span class="highlight">בוחש סירים אוטומטי</span>.</p>
+                    <p style="margin-top: 10px;">אתן מוזמנות להשתמש בכל סוגי הפרסום:</p>
+                </div>
+                <ul class="animate-item" style="margin-top: 10px;">
+                    <li>🎵 שיר</li>
+                    <li>🖼️ פלייר</li>
+                    <li>✍️ טקסט מיוחד</li>
+                    <li>💡 או כל רעיון אחר שיעזור להציג את המוצר שלכן בצורה המושלמת!</li>
+                </ul>
+                <img src="sir.png" alt="בוחש סירים אוטומטי" class="homework-image animate-item">
+            </div>
+        </div>
+
+        <!-- שקף 11: איך מתחילים -->
+        <div class="slide" id="slide11">
+            <div class="slide-box">
+                <h2 class="animate-item">🚀 אז איך מתחילים?</h2>
+
+                <div class="steps-container animate-item">
+                    <div class="step-box">
+                        <div class="step-number">1</div>
+                        <h4>יוצרים</h4>
+                        <p>מפתחים את התוכן השיווקי באמצעות הפלטפורמה שבחרתן</p>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-number">2</div>
+                        <h4>טקסט מנצח</h4>
+                        <p>העבירו את המסר השיווקי על הצד הטוב ביותר</p>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-number">3</div>
+                        <h4>העלאה</h4>
+                        <p>שתפו את התוכן השיווקי בבנק הפרסומות</p>
+                    </div>
+                </div>
+
+                <a href="https://snirsnir.github.io/foreveryoungday/adSir.html" target="_blank" class="bank-btn animate-item">🏦 לבנק הפרסומות</a>
+
+                <p class="animate-item" style="margin-top: 20px; font-size: 1.15em !important; color: #fde68a;">
+                    ⭐ תכנים שנאהב נציג לכם בשבוע הבא
+                </p>
+            </div>
+        </div>
+
+        <!-- שקף 12: סיום -->
+        <div class="slide" id="slide12">
+            <div class="slide-box">
+                <div class="final-emoji animate-item">🙏</div>
+                <h1 class="animate-item">תודה!</h1>
+                <h2 class="animate-item">נתראה בזום הבא!</h2>
+                <div class="highlight-box animate-item" style="margin-top: 20px;">
+                    <p style="font-size: 1.4em !important;">
+                        📅 יום רביעי הבא, <span class="highlight">18.02.26</span>
+                    </p>
+                    <p style="font-size: 1.3em !important; margin-top: 8px;">
+                        ⏰ בין השעות <span class="highlight">16:30 - 17:30</span>
+                    </p>
+                </div>
+                <div class="welcome-emoji" style="margin-top: 20px;">💜</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Image Overlay -->
+    <div class="image-overlay" id="imageOverlay" onclick="handleOverlayClick(event)">
+        <img src="" alt="תמונה מוגדלת" id="overlayImage" onclick="toggleZoom(event)">
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-controls">
+        <button class="nav-btn nav-prev" onclick="prevSlide()">→</button>
+        <span class="slide-counter" id="slideCounter">1 / 12</span>
+        <button class="nav-btn nav-next" onclick="nextSlide()">←</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        function showSlide(n) {
+            if (n < 1 || n > totalSlides) return;
+
+            // Remove active from current
+            document.getElementById('slide' + currentSlide).classList.remove('active');
+            // Reset animations
+            document.getElementById('slide' + currentSlide).querySelectorAll('.animate-item').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // trigger reflow
+                el.style.animation = '';
+            });
+
+            currentSlide = n;
+
+            // Show new slide
+            document.getElementById('slide' + currentSlide).classList.add('active');
+
+            // Update counter
+            document.getElementById('slideCounter').textContent = currentSlide + ' / ' + totalSlides;
+
+            // Update progress bar
+            document.getElementById('progressBar').style.width = ((currentSlide / totalSlides) * 100) + '%';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        });
+
+        // Image overlay with zoom and pan
+        let isZoomed = false;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        function openImageOverlay(src) {
+            const overlay = document.getElementById('imageOverlay');
+            const img = document.getElementById('overlayImage');
+            img.src = src;
+            overlay.classList.add('active');
+            resetZoom();
+        }
+
+        function handleOverlayClick(e) {
+            if (e.target === document.getElementById('imageOverlay')) {
+                closeImageOverlay();
+            }
+        }
+
+        function closeImageOverlay() {
+            document.getElementById('imageOverlay').classList.remove('active');
+            resetZoom();
+        }
+
+        function resetZoom() {
+            const img = document.getElementById('overlayImage');
+            isZoomed = false;
+            isDragging = false;
+            translateX = 0;
+            translateY = 0;
+            img.classList.remove('zoomed', 'dragging');
+            img.style.transform = 'scale(1) translate(0px, 0px)';
+        }
+
+        function toggleZoom(e) {
+            e.stopPropagation();
+            const img = document.getElementById('overlayImage');
+            if (!isZoomed) {
+                isZoomed = true;
+                translateX = 0;
+                translateY = 0;
+                img.classList.add('zoomed');
+                img.style.transform = 'scale(2.5) translate(0px, 0px)';
+            } else if (!isDragging) {
+                resetZoom();
+            }
+        }
+
+        // Pan (drag) support for zoomed image
+        const overlayImg = document.getElementById('overlayImage');
+
+        overlayImg.addEventListener('mousedown', function(e) {
+            if (!isZoomed) return;
+            e.preventDefault();
+            isDragging = false;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            this.classList.add('dragging');
+
+            const onMouseMove = (e) => {
+                isDragging = true;
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                overlayImg.style.transform = `scale(2.5) translate(${translateX / 2.5}px, ${translateY / 2.5}px)`;
+            };
+
+            const onMouseUp = () => {
+                overlayImg.classList.remove('dragging');
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                setTimeout(() => { isDragging = false; }, 50);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // Initialize progress bar
+        document.getElementById('progressBar').style.width = ((1 / totalSlides) * 100) + '%';
+    </script>
+
+</body>
+</html>
