@@ -962,8 +962,16 @@
             document.addEventListener('mouseup', onMouseUp);
         });
 
+        // Check for slide parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const startSlide = parseInt(urlParams.get('slide'));
+        if (startSlide && startSlide >= 1 && startSlide <= totalSlides) {
+            document.getElementById('slide1').classList.remove('active');
+            showSlide(startSlide);
+        }
+
         // Initialize progress bar
-        document.getElementById('progressBar').style.width = ((1 / totalSlides) * 100) + '%';
+        document.getElementById('progressBar').style.width = ((currentSlide / totalSlides) * 100) + '%';
     </script>
 
 </body>
