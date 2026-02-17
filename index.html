@@ -1023,8 +1023,8 @@
                     <button class="action-button secondary" onclick="openZoomModal()">
                         💻 מפגשי הזום
                     </button>
-                    <button class="action-button" onclick="alert('עדכונים יתפרסמו בקרוב!')">
-                        🏆 עדכונים לקראת יום השיא
+                    <button class="action-button" onclick="openImportantInfoModal()">
+                        🏆 מידע חשוב לקראת יום השיא
                     </button>
                 </div>
 
@@ -1585,19 +1585,31 @@
                 <!-- מפגש זום ראשון -->
                 <div class="zoom-meeting-card">
                     <h3>מפגש זום ראשון</h3>
-                    <div class="zoom-date-time">
-                        <span>📅 11.02.2026 (יום רביעי)</span>
-                        <span>⏰ 16:30 - 17:30</span>
+                    <div class="zoom-date-time" style="opacity: 0.5; background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);">
+                        <span style="color: #6b7280;">📅 11.02.2026 (יום רביעי)</span>
+                        <span style="color: #6b7280;">⏰ 16:30 - 17:30</span>
                     </div>
-                    <div class="zoom-content-title">תוכן המפגש:</div>
+                    <p style="text-align: center; color: #9ca3af; font-weight: 600; margin-bottom: 15px;">הזום כבר התרחש</p>
+                    <div class="zoom-content-title">הקלטת זום מלאה</div>
                     <ul class="zoom-content-list">
                         <li>הסבר ראשוני על הפורמט והמבנה</li>
                         <li>מיני הרצאה מאת איתן ושדי-לוי מחברת BLUEDOT על בינה מלאכותית</li>
                         <li>הכרת כלים דיגיטליים לשיווק דיגיטלי</li>
                     </ul>
-                    <button class="zoom-join-button" onclick="window.open('https://edu-il.zoom.us/j/4302796923?pwd=pbyA9qSh6OzC00P4SE6v1tLgWvecoe.1&omn=83571048823', '_blank')">
-                        🎥 לחצי לכניסה למפגש
-                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 25px;">
+                        <a href="https://drive.google.com/file/d/1iBlILtXsLtVBnJU04Yi7iGRNyYd4z4ZM/view?usp=sharing" target="_blank" class="zoom-join-button" style="text-decoration: none; text-align: center; background: linear-gradient(45deg, #2563eb, #1d4ed8); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+                            🎥 הקלטת הזום המלאה
+                        </a>
+                        <a href="https://drive.google.com/file/d/1vB6v4uI8EekKIVxyPePBdizptX6m_a_Z/view?usp=sharing" target="_blank" class="zoom-join-button" style="text-decoration: none; text-align: center; background: linear-gradient(45deg, #7c3aed, #6d28d9); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);">
+                            🎤 הרצאה של איתן ושדי-לוי מנכ"ל חברת BLUEDOT בנושא בינה מלאכותית
+                        </a>
+                        <a href="https://drive.google.com/file/d/1qvsYylGLfA67GKAk33xlM9STflPiGcXR/view?usp=sharing" target="_blank" class="zoom-join-button" style="text-decoration: none; text-align: center; background: linear-gradient(45deg, #059669, #047857); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);">
+                            🎨 הכרת כלים שימושיים לסדנת השיווק
+                        </a>
+                        <a href="zoom1.html?slide=9" target="_blank" class="zoom-join-button" style="text-decoration: none; text-align: center; background: linear-gradient(45deg, #f59e0b, #d97706); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);">
+                            📝 שיעורי הבית: אתגר פרסום סמארטסטיר - הבוחש האוטומטי!
+                        </a>
+                    </div>
                 </div>
 
                 <!-- מפגש זום שני -->
@@ -1619,6 +1631,197 @@
                         🎥 לחצי לכניסה למפגש
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Important Info Modal -->
+    <div id="importantInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeImportantInfoModal()">&times;</span>
+            <h2>מידע חשוב לקראת היום הגדול</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 25px;">
+
+                <!-- דגשים חשובים -->
+                <div style="background: #fff0f6; padding: 20px; border-radius: 10px; border-right: 5px solid #e11d48;">
+                    <h3 style="color: #be123c; font-size: 1.3em; margin-bottom: 15px; margin-top: 0;">דגשים חשובים</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #e11d48;">❗</span>
+                            <strong>אנו ניצור קשר 3 ימים לפני יום השיא, בשביל לאשר הגעה</strong>
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #e11d48;">❗</span>
+                            הסעת המשתתפות לתחרות הינה באחריות בתי הספר/ההורים. להזכירכם, פרויקט נשים מובילות מדע מקיים את הפעילות בהתנדבות מלאה.
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #e11d48;">❗</span>
+                            אין צורך להביא איתכם חומרי לימוד, אנחנו עושים הכל בטכנודע!
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #e11d48;">❗</span>
+                            מומלץ ואף רצוי לעבור על התוכן שהעברנו במפגשי הזום
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #e11d48;">❗</span>
+                            לבוא עם הרבה מרץ ומוטיבציה!
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- מה להביא -->
+                <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; border-right: 5px solid #0ea5e9;">
+                    <h3 style="color: #0369a1; font-size: 1.3em; margin-bottom: 15px; margin-top: 0;">מה להביא ליום השיא?</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #0ea5e9;">✓</span>
+                            בקבוק מים אישי
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #0ea5e9;">✓</span>
+                            מעט נשנושים. אנו דואגים לארוחת בוקר וצהריים
+                        </li>
+                        <li style="padding: 8px 30px 8px 0; position: relative;">
+                            <span style="position: absolute; right: 0; color: #0ea5e9;">✓</span>
+                            חולצת קבוצה אחידה (לא חובה)
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- הגעה וחניה -->
+                <div style="background: #ecfdf5; padding: 20px; border-radius: 10px; border-right: 5px solid #10b981;">
+                    <h3 style="color: #047857; font-size: 1.3em; margin-bottom: 15px; margin-top: 0;">הגעה וחניה</h3>
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        <strong>ההגעה לטכנודע הינה עצמאית / באחריות בית הספר</strong>
+                    </p>
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        <strong>כתובת:</strong> טכנודע חדרה, רחוב הרב ניסים 2 חדרה
+                    </p>
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        <strong>קישור ל-WAZE:</strong> <a href="https://ul.waze.com/ul?place=ChIJb4oxDeESHRURIc6qjYU3Fm8&ll=32.43856290%2C34.88860240&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" style="color: #047857; text-decoration: underline;">לחץ כאן לניווט</a>
+                    </p>
+                </div>
+
+                <!-- קריטריונים לשיפוט במעבדות -->
+                <div style="background: #eff6ff; padding: 20px; border-radius: 10px; border-right: 5px solid #3b82f6;">
+                    <h3 style="color: #1d4ed8; font-size: 1.3em; margin-bottom: 10px; margin-top: 0;">קריטריונים לשיפוט במעבדות</h3>
+                    <p style="margin-bottom: 15px; line-height: 1.6; color: #1e40af;">הבנות יישפטו במעבדות בזמן הפעילות ע"י מדריכי הטכנודע לפי הקריטריונים הבאים:</p>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="padding: 10px 40px 10px 0; position: relative; margin-bottom: 8px; background-color: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                            <span style="position: absolute; right: 10px; color: #3b82f6; font-size: 1.2em;">✨</span>
+                            <strong style="color: #1e40af; font-size: 1.05em;">מילוי המשימה</strong>
+                        </li>
+                        <li style="padding: 10px 40px 10px 0; position: relative; margin-bottom: 8px; background-color: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                            <span style="position: absolute; right: 10px; color: #3b82f6; font-size: 1.2em;">👥</span>
+                            <strong style="color: #1e40af; font-size: 1.05em;">עבודת צוות</strong>
+                        </li>
+                        <li style="padding: 10px 40px 10px 0; position: relative; margin-bottom: 8px; background-color: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                            <span style="position: absolute; right: 10px; color: #3b82f6; font-size: 1.2em;">💡</span>
+                            <strong style="color: #1e40af; font-size: 1.05em;">חשיבה יצירתית</strong>
+                        </li>
+                        <li style="padding: 10px 40px 10px 0; position: relative; background-color: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                            <span style="position: absolute; right: 10px; color: #3b82f6; font-size: 1.2em;">🎯</span>
+                            <strong style="color: #1e40af; font-size: 1.05em;">עבודה עצמאית</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- קריטריונים לשיפוט - הצגת הפרויקט -->
+                <div style="background: #f5f3ff; padding: 20px; border-radius: 10px; border-right: 5px solid #7c3aed;">
+                    <h3 style="color: #6d28d9; font-size: 1.3em; margin-bottom: 10px; margin-top: 0;">קריטריונים לשיפוט</h3>
+                    <p style="margin-bottom: 15px; line-height: 1.6; color: #5b21b6;">הצגת הפרויקט לשופטים תישפט לפי הקריטריונים הבאים:</p>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">01 הבעיה/צורך – מה באמת מפריע?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Problem Space: Validation & Clarity)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>עוצמת הבעיה:</strong> עד כמה הבעיה שהוצגה היא "בוערת", אמיתית ומשמעותית? (האם זה "נחמד שיהיה" או "חייב להיות"?).</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>תיקוף מהשטח:</strong> האם היזמיות הוכיחו שהבעיה קיימת במציאות?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>בהירות המסר:</strong> האם הצוות תיאר את הבעיה בצורה פשוטה, חדה וברורה, מבלי לערבב בתוכה את הפתרון?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">02 קהל יעד – למי אנחנו עוזרות?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Target Audience: Persona & Empathy)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>מיקוד הקהל:</strong> האם הן בחרו "דמות ספציפית" כפי שהתבקשו ולא נשארו עם הגדרה כללית?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>הבנת הכאב של הלקוחה:</strong> האם ניכר שהן מבינות לעומק את הסיטואציה, הרגשות והקשיים של הלקוחה שבחרו?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>התאמה:</strong> האם הבעיה שהוגדרה אכן רלוונטית וקריטית עבורה?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">03 מחקר וניתוח שוק – איך בודקות שזו בעיה אמיתית?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Market Analysis: The Gap)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>עבודת בילוש:</strong> האם היזמיות בדקו מה כבר קיים בשוק? (האם הן יודעות לתאר את הפתרונות הקיימים?).</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>זיהוי הפספוס:</strong> האם הן ידעו להצביע במדויק על מה חסר בפתרונות המתחרים?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>היתרון היחסי:</strong> האם ברור למה הפתרון שלהן יהיה טוב יותר מהאחרים?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">04 הפתרון – מה הרעיון שלנו?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Solution Space: Innovation)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>יצירתיות ותעוזה:</strong> האם הרעיון שהוצג הוא מקורי, חכם ומציע גישה רעננה לפתרון הבעיה?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>פשטות:</strong> האם הפתרון הוא "הדרך הכי פשוטה ויעילה" כפי שהתבקשו, או שהוא מסורבל מדי?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>בהירות הרעיון:</strong> האם הן הצליחו לנסח את "רעיון הזהב" שלהן במשפט אחד ברור ומנצח?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">05 מוצר (אב-טיפוס) – איך זה בעצם נראה?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Prototyping: Usability & Making)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>הורדה לקרקע:</strong> האם הדגם ממחיש היטב איך המוצר נראה ומרגיש במציאות?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>איכות הביצוע:</strong> האם ניכרת חשיבה והשקעה בבחירת החומרים, במבנה ובאסתטיקה של הדגם?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>הנדסת אנוש ונוחות:</strong> האם המוצר הגיוני, נוח ופשוט לשימוש עבור המשתמשת?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 12px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">06 מודל עסקי ושיווק – איך אפשר לשווק את המוצר?</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Go-To-Market: Feasibility)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>ערוצי הפצה:</strong> האם התשובה לשאלה "איך העולם יידע?" היא הגיונית ויצירתית? (מותאמת לקהל היעד הנשי שלהן).</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>נגישות המוצר:</strong> האם הן הגדירו בבירור איך משיגים את המוצר? (חנות/הורדה בחינם/קנייה) – והאם זה ריאלי?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>יכולת שכנוע:</strong> האם התוכנית העסקית/שיווקית שלהן נשמעת משכנעת וישימה?</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 8px; padding: 15px; border-right: 4px solid #8b1574;">
+                        <p style="font-weight: 700; color: #6d28d9; margin-bottom: 8px; font-size: 1.05em;">07 הבונוס: ההצגה והצוות</p>
+                        <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 8px; font-style: italic;">(Pitch & Team - The X-Factor)</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>סטוריטלינג:</strong> האם הסיפור היה מעניין, סוחף ומובנה היטב?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>הכוח הקבוצתי (Team Power):</strong> האם כל חברות הצוות היו מעורבות? האם היה פרגון הדדי ועבודה משותפת?</li>
+                            <li style="padding: 5px 15px 5px 0; position: relative; color: #374151; font-size: 0.95em;"><span style="position: absolute; right: 0; color: #7c3aed;">•</span><strong>מקצועיות:</strong> האם הן שלטו בחומר וענו לשאלות בביטחון ובידע?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- שאלות נפוצות -->
+                <div style="background: #fef2f2; padding: 20px; border-radius: 10px; border-right: 5px solid #ef4444;">
+                    <h3 style="color: #b91c1c; font-size: 1.3em; margin-bottom: 15px; margin-top: 0;">שאלות נפוצות</h3>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 5px; color: #333;">האם יש ארוחת צהריים מסודרת?</p>
+                            <p style="color: #555;">כן, תוגש ארוחת צהריים לכל המשתתפות. אם יש צרכים תזונתיים מיוחדים, אנא עדכנו אותנו מראש.</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 5px; color: #333;">האם אפשר להביא חומרים וציוד מהבית?</p>
+                            <p style="color: #555;">לא, כל החומרים והציוד יסופקו על ידי צוות ההאקתון. זאת כדי לשמור על הוגנות בין כל הקבוצות.</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 5px; color: #333;">כמה קבוצות זוכות?</p>
+                            <p style="color: #555;">אנו נכריז על 5 קבוצות זוכות.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1684,6 +1887,20 @@
         // Function to close zoom modal
         window.closeZoomModal = function() {
             const modal = document.getElementById('zoomModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Function to open important info modal
+        window.openImportantInfoModal = function() {
+            const modal = document.getElementById('importantInfoModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close important info modal
+        window.closeImportantInfoModal = function() {
+            const modal = document.getElementById('importantInfoModal');
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
