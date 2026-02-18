@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נשים מובילות מדע – תשובות</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            background: url('nashimBG.png') center 30% / cover no-repeat fixed;
+            padding: 36px 16px;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 12, 40, 0.68);
+            z-index: 0;
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* ===== Header ===== */
+        .header-card {
+            background: rgba(8, 20, 60, 0.85);
+            border: 1.5px solid rgba(251,191,36,0.4);
+            border-radius: 22px;
+            padding: 30px 40px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header-card h1 {
+            color: #fbbf24;
+            font-size: 1.75em;
+            font-weight: 700;
+        }
+
+        .header-card .subtitle {
+            color: #93c5fd;
+            font-size: 0.95em;
+            margin-top: 4px;
+        }
+
+        .counter-badge {
+            background: rgba(251,191,36,0.15);
+            border: 1.5px solid rgba(251,191,36,0.5);
+            border-radius: 14px;
+            padding: 10px 22px;
+            color: #fbbf24;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .counter-badge span {
+            font-size: 0.7em;
+            color: #93c5fd;
+            display: block;
+            font-weight: 400;
+        }
+
+        /* ===== Controls ===== */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(251,191,36,0.3);
+            border-radius: 12px;
+            padding: 11px 16px;
+            color: #fff;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input::placeholder { color: rgba(255,255,255,0.35); }
+        .search-input:focus { border-color: #fbbf24; }
+
+        .refresh-btn, .export-btn {
+            background: rgba(251,191,36,0.15);
+            border: 1.5px solid rgba(251,191,36,0.45);
+            border-radius: 12px;
+            padding: 11px 20px;
+            color: #fbbf24;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            white-space: nowrap;
+        }
+
+        .refresh-btn:hover, .export-btn:hover {
+            background: rgba(251,191,36,0.25);
+            transform: translateY(-1px);
+        }
+
+        /* ===== Response cards ===== */
+        #responsesList {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .resp-card {
+            background: rgba(8, 20, 60, 0.82);
+            border: 1.5px solid rgba(251,191,36,0.28);
+            border-radius: 18px;
+            padding: 28px 32px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            animation: fadeSlideIn 0.4s ease;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .resp-card:hover {
+            border-color: rgba(251,191,36,0.5);
+            box-shadow: 0 4px 24px rgba(251,191,36,0.1);
+        }
+
+        .resp-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .resp-name {
+            color: #fbbf24;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .resp-phone {
+            color: #93c5fd;
+            font-size: 1em;
+            font-weight: 500;
+            direction: ltr;
+            unicode-bidi: embed;
+        }
+
+        .resp-time {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.82em;
+        }
+
+        .resp-divider {
+            border: none;
+            border-top: 1px solid rgba(251,191,36,0.18);
+            margin: 14px 0;
+        }
+
+        .qa-block {
+            margin-bottom: 16px;
+        }
+
+        .qa-block:last-child { margin-bottom: 0; }
+
+        .q-label {
+            color: #93c5fd;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .q-num {
+            display: inline-block;
+            background: rgba(251,191,36,0.15);
+            border: 1px solid rgba(251,191,36,0.35);
+            color: #fbbf24;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 0.82em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .q-text { color: #dbeafe; font-size: 0.88em; }
+
+        .a-text {
+            color: #fff;
+            font-size: 1em;
+            line-height: 1.65;
+            background: rgba(255,255,255,0.04);
+            border-right: 3px solid rgba(251,191,36,0.5);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Loading / empty states */
+        .state-box {
+            text-align: center;
+            padding: 60px 20px;
+            color: #93c5fd;
+            font-size: 1.2em;
+        }
+
+        .state-box .icon { font-size: 3em; margin-bottom: 12px; }
+
+        .loader {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border: 4px solid rgba(251,191,36,0.25);
+            border-top-color: #fbbf24;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin-bottom: 14px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== Questions reference labels ===== */
+        .q-labels-map {
+            1: 'מהי הבעיה שהמוצר שלכן פותר?';
+        }
+
+        @media (max-width: 560px) {
+            .header-card { padding: 22px 20px; }
+            .resp-card { padding: 20px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="page-wrap">
+
+        <!-- Header -->
+        <div class="header-card">
+            <div>
+                <h1>📋 תשובות השאלון</h1>
+                <div class="subtitle">נשים מובילות מדע – יום השיא</div>
+            </div>
+            <div class="counter-badge">
+                <span>מספר תשובות</span>
+                <span id="totalCount">–</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍  חיפוש לפי שם...">
+            <button class="refresh-btn" id="refreshBtn">🔄 רענן</button>
+            <button class="export-btn" id="exportBtn">📥 ייצוא CSV</button>
+        </div>
+
+        <!-- List -->
+        <div id="responsesList">
+            <div class="state-box" id="loadingState">
+                <div class="loader"></div><br>
+                טוענת נתונים...
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQdei2zVCXkYh99pLPzr_ZMyi8ohupVhY",
+            authDomain: "forever-4a04b.firebaseapp.com",
+            databaseURL: "https://forever-4a04b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "forever-4a04b",
+            storageBucket: "forever-4a04b.firebasestorage.app",
+            messagingSenderId: "250928700713",
+            appId: "1:250928700713:web:25d6979fca637b90d42b38"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db  = getDatabase(app);
+
+        const QUESTIONS = [
+            'מהי הבעיה שהמוצר שלכן פותר? (קהל היעד והצורך שגיליתן)',
+            'איפה עומד הפרויקט שלכן כרגע? (מה יש ומה עוד צריך)',
+            'מהו האתגר הגדול ביותר? (במה נוכל לעזור לכן?)'
+        ];
+
+        let allData = [];
+
+        function formatDate(ts) {
+            if (!ts) return '';
+            const d = new Date(ts);
+            return d.toLocaleDateString('he-IL', { day:'2-digit', month:'2-digit', year:'numeric' })
+                + ' ' + d.toLocaleTimeString('he-IL', { hour:'2-digit', minute:'2-digit' });
+        }
+
+        function renderCards(list) {
+            const container = document.getElementById('responsesList');
+            document.getElementById('totalCount').textContent = list.length;
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="state-box">
+                        <div class="icon">🔍</div>
+                        לא נמצאו תשובות
+                    </div>`;
+                return;
+            }
+
+            // newest first
+            const sorted = [...list].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            container.innerHTML = sorted.map((item, idx) => `
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <div>
+                            <div class="resp-name">👤 ${esc(item.name)}</div>
+                            <div class="resp-phone">📱 ${esc(item.phone)}</div>
+                        </div>
+                        <div class="resp-time">${formatDate(item.timestamp)}</div>
+                    </div>
+                    <hr class="resp-divider">
+                    ${[item.q1, item.q2, item.q3].map((ans, qi) => `
+                        <div class="qa-block">
+                            <div class="q-label">
+                                <span class="q-num">${qi + 1}</span>
+                                <span class="q-text">${QUESTIONS[qi]}</span>
+                            </div>
+                            <div class="a-text">${esc(ans || '(ללא תשובה)')}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        function esc(str) {
+            return String(str)
+                .replace(/&/g,'&amp;')
+                .replace(/</g,'&lt;')
+                .replace(/>/g,'&gt;')
+                .replace(/"/g,'&quot;')
+                .replace(/\n/g,'<br>');
+        }
+
+        // Load data
+        onValue(ref(db, 'formResponses'), (snapshot) => {
+            const raw = snapshot.val();
+            allData = raw
+                ? Object.entries(raw).map(([key, val]) => ({ key, ...val }))
+                : [];
+            applyFilter();
+        }, (err) => {
+            console.error(err);
+            document.getElementById('responsesList').innerHTML = `
+                <div class="state-box">
+                    <div class="icon">❌</div>
+                    שגיאה בטעינה: ${err.message}
+                </div>`;
+        });
+
+        function applyFilter() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            const filtered = q
+                ? allData.filter(r => r.name && r.name.toLowerCase().includes(q))
+                : allData;
+            renderCards(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilter);
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            document.getElementById('responsesList').innerHTML = `
+                <div class="state-box" id="loadingState">
+                    <div class="loader"></div><br>
+                    טוענת נתונים...
+                </div>`;
+            // onValue will re-fire; nothing extra needed — just clear and wait
+        });
+
+        // CSV export
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            if (!allData.length) { alert('אין נתונים לייצוא'); return; }
+
+            const header = ['שם','טלפון','שאלה 1','שאלה 2','שאלה 3','תאריך'];
+            const rows = allData.map(r => [
+                r.name, r.phone, r.q1, r.q2, r.q3,
+                r.timestamp ? new Date(r.timestamp).toLocaleString('he-IL') : ''
+            ].map(v => `"${String(v||'').replace(/"/g,'""')}"`));
+
+            const csv = '\uFEFF' + [header, ...rows].map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href     = url;
+            a.download = 'nashim_answers.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>

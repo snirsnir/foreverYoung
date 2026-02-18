@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נשים מובילות מדע – שאלון פרויקט</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            background: url('nashimBG.png') center 30% / cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 12, 40, 0.65);
+            z-index: 0;
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(8, 20, 60, 0.82);
+            border: 1.5px solid rgba(251, 191, 36, 0.35);
+            border-radius: 22px;
+            padding: 44px 48px;
+            max-width: 680px;
+            width: 100%;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .logo-row img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 2px solid rgba(251,191,36,0.4);
+        }
+
+        .logo-text {
+            font-size: 1.1em;
+            color: #93c5fd;
+            line-height: 1.3;
+        }
+
+        h1 {
+            color: #fbbf24;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 12px rgba(251,191,36,0.3);
+        }
+
+        .subtitle {
+            color: #dbeafe;
+            font-size: 1.05em;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(251,191,36,0.25);
+            margin: 20px 0 28px;
+        }
+
+        label {
+            display: block;
+            color: #fbbf24;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .field-group {
+            margin-bottom: 24px;
+        }
+
+        .field-hint {
+            color: #93c5fd;
+            font-size: 0.88em;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(251,191,36,0.3);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: #fff;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.05em;
+            transition: border-color 0.25s, background 0.25s;
+            outline: none;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: rgba(251,191,36,0.18);
+            border: 1.5px solid rgba(251,191,36,0.45);
+            color: #fbbf24;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            line-height: 28px;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: 700;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .question-label-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .question-label-row label {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .section-title {
+            color: #93c5fd;
+            font-size: 0.95em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 18px;
+            margin-top: 8px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            margin-top: 16px;
+            padding: 15px 32px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0c2461;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+            box-shadow: 0 4px 18px rgba(251,191,36,0.35);
+            letter-spacing: 0.02em;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(251,191,36,0.5);
+            filter: brightness(1.06);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success message */
+        .success-box {
+            display: none;
+            text-align: center;
+            padding: 36px 24px;
+        }
+
+        .success-box .checkmark {
+            font-size: 4em;
+            margin-bottom: 16px;
+            animation: popIn 0.5s ease;
+        }
+
+        .success-box h2 {
+            color: #fbbf24;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .success-box p {
+            color: #dbeafe;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Error message */
+        .error-msg {
+            color: #f87171;
+            font-size: 0.88em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .field-group.invalid input,
+        .field-group.invalid textarea {
+            border-color: #f87171;
+        }
+
+        .field-group.invalid .error-msg {
+            display: block;
+        }
+
+        @media (max-width: 560px) {
+            .card { padding: 28px 22px; }
+            h1 { font-size: 1.55em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="card">
+
+        <div class="logo-row">
+            <div class="logo-text">
+                <div style="font-weight:600; color:#fbbf24;">נשים מובילות מדע</div>
+                <div style="font-size:0.88em; opacity:0.8;">יום השיא – שאלון פרויקט</div>
+            </div>
+        </div>
+
+        <h1>ספרו לנו על הפרויקט שלכן 💡</h1>
+        <p class="subtitle">
+            יש לכן בעיה? פתרון? שתפו אותנו ונסה לעזור! ענו על השאלות הקצרות ואנחנו מבטיחים לחזור אליכן 💜
+        </p>
+
+        <form id="mainForm" novalidate>
+
+            <!-- פרטים אישיים -->
+            <div class="section-title">📋 פרטי הקבוצה</div>
+
+            <div class="field-group" id="fg-fullName">
+                <label for="fullName">שמות בנות הקבוצה</label>
+                <input type="text" id="fullName" name="fullName" placeholder="לדוגמה: דנה כהן, מיה לוי, שירה אברהם" autocomplete="off">
+                <div class="error-msg">נא למלא את שמות הבנות</div>
+            </div>
+
+            <div class="field-group" id="fg-phone">
+                <label for="phone">מספר טלפון נייד של אחת הבנות לקבלת התשובה</label>
+                <input type="tel" id="phone" name="phone" placeholder="05X-XXXXXXX" autocomplete="tel" dir="ltr" style="text-align:right;">
+                <div class="error-msg">נא למלא מספר טלפון תקין</div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- שאלות Design Thinking -->
+            <div class="section-title">🔍 שאלות על הפרויקט</div>
+
+            <div class="field-group" id="fg-q1">
+                <div class="question-label-row">
+                    <span class="question-number">1</span>
+                    <label for="q1">מהי הבעיה שהמוצר שלכן פותר?</label>
+                </div>
+                <div class="field-hint">תארי את קהל היעד שלכן ואת הצורך שגיליתן – מי סובל מהבעיה? מה כואב להן?</div>
+                <textarea id="q1" name="q1" placeholder="לדוגמה: אנחנו פונות לאנשים שסובלים מ... וגילינו שהבעיה שלהם היא..."></textarea>
+                <div class="error-msg">נא לענות על שאלה זו</div>
+            </div>
+
+            <div class="field-group" id="fg-q2">
+                <div class="question-label-row">
+                    <span class="question-number">2</span>
+                    <label for="q2">מה הפתרון שחשבתן עליו לבעיה?</label>
+                </div>
+                <div class="field-hint">תארו את הרעיון שלכן – מה המוצר או השירות שתרצו לפתח ביום השיא? </div>
+                <textarea id="q2" name="q2" placeholder="לדוגמה: חשבנו על... שיעזור ל... על ידי..."></textarea>
+                <div class="error-msg">נא לענות על שאלה זו</div>
+            </div>
+
+            <div class="field-group" id="fg-q3">
+                <div class="question-label-row">
+                    <span class="question-number">3</span>
+                    <label for="q3">מהו האתגר הגדול ביותר שאתן מתמודדות איתו?</label>
+                </div>
+                <div class="field-hint">במה נוכל לעזור לכן? שתפו אותנו בקושי – ואנחנו ננסה לעזור!</div>
+                <textarea id="q3" name="q3" placeholder="לדוגמה: הקושי שלנו הוא... ואנחנו הייתן רוצות עזרה עם..."></textarea>
+                <div class="error-msg">נא לענות על שאלה זו</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                שלחי את התשובות 🚀
+            </button>
+
+        </form>
+
+        <!-- הודעת הצלחה -->
+        <div class="success-box" id="successBox">
+            <div class="checkmark">🎉</div>
+            <h2>תודה רבה!</h2>
+            <p>התשובות שלך נשמרו בהצלחה.<br>אנחנו מבטיחות לחזור אליך ולנסות לעזור 💜</p>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQdei2zVCXkYh99pLPzr_ZMyi8ohupVhY",
+            authDomain: "forever-4a04b.firebaseapp.com",
+            databaseURL: "https://forever-4a04b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "forever-4a04b",
+            storageBucket: "forever-4a04b.firebasestorage.app",
+            messagingSenderId: "250928700713",
+            appId: "1:250928700713:web:25d6979fca637b90d42b38"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function validateField(id, checkFn) {
+            const fg = document.getElementById('fg-' + id);
+            const el = document.getElementById(id);
+            const valid = checkFn(el.value.trim());
+            fg.classList.toggle('invalid', !valid);
+            return valid;
+        }
+
+        function isValidPhone(val) {
+            return /^0[0-9\-]{8,12}$/.test(val.replace(/\s/g, ''));
+        }
+
+        document.getElementById('mainForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const v1 = validateField('fullName', v => v.length >= 2);
+            const v2 = validateField('phone',    v => isValidPhone(v));
+            const v3 = validateField('q1',       v => v.length >= 5);
+            const v4 = validateField('q2',       v => v.length >= 5);
+            const v5 = validateField('q3',       v => v.length >= 5);
+
+            if (!v1 || !v2 || !v3 || !v4 || !v5) return;
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'שולחת...';
+
+            const data = {
+                name:      document.getElementById('fullName').value.trim(),
+                phone:     document.getElementById('phone').value.trim(),
+                q1:        document.getElementById('q1').value.trim(),
+                q2:        document.getElementById('q2').value.trim(),
+                q3:        document.getElementById('q3').value.trim(),
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                await push(ref(db, 'formResponses'), data);
+                document.getElementById('mainForm').style.display = 'none';
+                document.getElementById('successBox').style.display = 'block';
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false;
+                btn.textContent = 'שגיאה – נסי שוב';
+                alert('אירעה שגיאה בשמירה. נסי שוב.');
+            }
+        });
+
+        // Live validation on blur
+        document.getElementById('fullName').addEventListener('blur', () => {
+            validateField('fullName', v => v.length >= 2);
+        });
+        document.getElementById('phone').addEventListener('blur', () => {
+            validateField('phone', v => isValidPhone(v));
+        });
+        ['q1','q2','q3'].forEach(id => {
+            document.getElementById(id).addEventListener('blur', () => {
+                validateField(id, v => v.length >= 5);
+            });
+        });
+    </script>
+</body>
+</html>
