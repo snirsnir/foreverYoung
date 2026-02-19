@@ -537,9 +537,6 @@
                         <p>לדוגמא 👆</p>
                     </a>
                 </div>
-                <a href="https://snirsnir.github.io/foreveryoungday/book.html" target="_blank" class="bank-btn animate-item" style="margin-top: 8px; font-size: 1.05em; padding: 10px 28px;">
-                    📝 ספר פרויקט ריק – אשף ביום השיא
-                </a>
             </div>
         </div>
 
@@ -795,6 +792,16 @@
         }
 
         document.getElementById('progressBar').style.width = ((1 / totalSlides) * 100) + '%';
+
+        // Hash-based direct slide navigation (e.g. zoom2.html#slide-10)
+        // requestAnimationFrame ensures the DOM is fully rendered before jumping
+        requestAnimationFrame(function() {
+            const hashMatch = window.location.hash.match(/^#slide-(\d+)$/);
+            if (hashMatch) {
+                const target = parseInt(hashMatch[1]);
+                if (target >= 1 && target <= totalSlides) showSlide(target);
+            }
+        });
     </script>
 
 </body>
